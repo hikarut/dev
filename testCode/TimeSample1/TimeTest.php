@@ -1,6 +1,6 @@
 <?php
 
-require_once 'TimeBad.php';
+require_once 'Time.php';
 
 class TimeTest extends PHPUnit_Framework_TestCase
 {
