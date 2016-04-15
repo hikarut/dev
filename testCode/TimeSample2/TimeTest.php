@@ -11,14 +11,17 @@ class TimeTest extends PHPUnit_Framework_TestCase
     public function getTimeTest()
     {
 
+        // Timeクラスのモックを作成
         $mock = $this->getMockBuilder('Time')
-                     ->setMethods(array('getNow', 'getTomrrow'))
+                     ->setMethods(['getNow', 'getTomrrow'])
                      ->getMock();
 
+        // getNowメソッドのモック
         $mock->method('getNow')
              ->will($this->onConsecutiveCalls(strtotime('2016-04-15 23:40:59'),
                                               strtotime('2016-04-15 23:50:01'),
                                               strtotime('2016-04-15 23:59:59')));
+        // getTomrrowメソッドのモック
         $mock->method('getTomrrow')
              ->will($this->onConsecutiveCalls(strtotime('2016-04-16 00:00:00'),
                                               strtotime('2016-04-16 00:00:00'),

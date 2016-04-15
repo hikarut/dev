@@ -17,11 +17,9 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
     public function getTimeDataProvider()
     {
-        return array(
-                    array(600, strtotime('2016-04-15 23:40:59'), strtotime('2016-04-16 00:00:00'), 600),
-                    array(600, strtotime('2016-04-15 23:50:01'), strtotime('2016-04-16 00:00:00'), 599),
-                    array(600, strtotime('2016-04-15 23:59:59'), strtotime('2016-04-16 00:00:00'), 1),
-                    );
+        return [[600, strtotime('2016-04-15 23:40:59'), strtotime('2016-04-16 00:00:00'), 600],
+                [600, strtotime('2016-04-15 23:50:01'), strtotime('2016-04-16 00:00:00'), 599],
+                [600, strtotime('2016-04-15 23:59:59'), strtotime('2016-04-16 00:00:00'), 1]];
     }
 
 
