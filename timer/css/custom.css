@@ -1,0 +1,22 @@
+.main {
+    background-image: url(../img/flower.jpg);
+}
+
+.message {
+    font-size: 500%;
+    text-align: center;
+}
+
+.timer {
+    font-size: 900%;
+    text-align: center;
+}
+
+.timeout {
+    color: red;
+}
+
+.minutes, .hours, .seconds {
+    text-align: center;
+    display:inline;
+}
