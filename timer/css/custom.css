@@ -6,6 +6,10 @@
     */
 }
 
+body{
+    font-family: 'Noto Sans Japanese', serif;
+}
+
 .message {
     font-size: 550%;
     text-align: center;
@@ -13,7 +17,7 @@
 }
 
 .start {
-    font-size: 900%;
+    font-size: 200%;
     text-align: center;
 }
 
