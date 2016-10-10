@@ -12,6 +12,11 @@
     padding : 40px;
 }
 
+.start {
+    font-size: 900%;
+    text-align: center;
+}
+
 .timer {
     font-size: 900%;
     text-align: center;
