@@ -65,6 +65,9 @@ set showmatch
 "カーソルがある画面上の行を強調する
 "set cursorline
 
+set wildmenu " コマンドモードの補完
+set history=5000 " 保存するコマンド履歴の数
+
 hi StatusLine gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=White ctermbg=Black    " アクティブなステータスライン
 hi StatusLineNC gui=NONE guifg=Black guibg=Green cterm=NONE ctermfg=White ctermbg=White  " 非アクティブなステータスライン
 
@@ -111,91 +114,47 @@ vnoremap <C-D> :call PhpDocRange()<CR>
 " 前回終了したカーソル行に移動 {{{2
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
+" ペースト時にインデントをずらさない
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
 
-" neobundle
-" Vi互換をオフ（Vimの機能を使えるようにする）
-"set nocompatible               " Be iMproved
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
 
-"if has('vim_starting')
-"set runtimepath+=~/.vim/bundle/neobundle.vim/
-"endif
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
 
-"call neobundle#rc(expand('~/.vim/bundle/'))
+" NeoBundle
+if has('vim_starting')
+    " 初回起動時のみruntimepathにNeoBundleのパスを指定する
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+    " NeoBundleが未インストールであればgit cloneする
+    if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
+        echo "install NeoBundle..."
+        :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+    endif
+endif
 
-" Let NeoBundle manage NeoBundle
+call neobundle#begin(expand('~/.vim/bundle/'))
+" インストールするVimプラグインを以下に記述
+" NeoBundle自身を管理
 "NeoBundleFetch 'Shougo/neobundle.vim'
+"----------------------------------------------------------
+" ここに追加したいVimプラグインを記述する
 
-" Recommended to install
-" After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-"NeoBundle 'Shougo/vimproc'
+" カラースキームmolokai
+"NeoBundle 'tomasr/molokai'
+" ステータスラインの表示内容強化
+NeoBundle 'itchyny/lightline.vim'
 
-" My Bundles here:
-"
-" Note: You don't set neobundle setting in .gvimrc!
-" Original repos on github
-"NeoBundle 'tpope/vim-fugitive'
-"NeoBundle 'Lokaltog/vim-easymotion'
-"NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"----------------------------------------------------------
+call neobundle#end()
+" ファイルタイプ別のVimプラグイン/インデントを有効にする
+filetype plugin indent on
+" 未インストールのVimプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+NeoBundleCheck
 
-" vim-scripts repos
-"NeoBundle 'L9'
-"NeoBundle 'FuzzyFinder'
-"NeoBundle 'rails.vim'
-
-" Non github repos
-"NeoBundle 'git://git.wincent.com/command-t.git'
-
-" Non git repos
-"NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
-"NeoBundle 'Lokaltog/vim-powerline'
-
-"NeoBundle 'git://github.com/Shougo/vimshell.git'
-"NeoBundle 'git://github.com/thinca/vim-quickrun.git'
-"NeoBundle 'git://github.com/mattn/zencoding-vim.git'
-"NeoBundle 'Shougo/neocomplcache'
-"NeoBundle 'Shougo/neosnippet'
-
-" その他 {{{
-"NeoBundle 'Shougo/vimproc', {
-"      \ 'build' : {
-"      \     'mac' : 'make -f make_mac.mak',
-"      \     'unix' : 'make -f make_unix.mak',
-"      \    },
-"      \ }
-"NeoBundleLazy 'taichouchou2/vim-endwise.git', {
-"      \ 'autoload' : {
-"      \   'insert' : 1,
-"      \ } }
-" }}}
-
-" 補完 {{{
-"NeoBundleLazy 'Shougo/neocomplcache', {
-"      \ 'autoload' : {
-"      \   'insert' : 1,
-"      \ }}
-"NeoBundleLazy 'Shougo/neosnippet', {
-"      \ 'autoload' : {
-"      \   'insert' : 1,
-"      \ }}
-
-"NeoBundle 'Shougo/neocomplcache-rsense', {
-"      \ 'depends': 'Shougo/neocomplcache',
-"      \ 'autoload': { 'filetypes': 'ruby' }}
-"NeoBundleLazy 'taichouchou2/rsense-0.3', {
-"      \ 'build' : {
-"      \    'mac': 'ruby etc/config.rb > ~/.rsense',
-"      \    'unix': 'ruby etc/config.rb > ~/.rsense',
-"      \ } }
-" }}}
-
-" ...
-
-"filetype plugin indent on     " Required!
-"
-" Brief help
-" :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install(update) bundles
-" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-
-" Installation check.
-"NeoBundleCheck
