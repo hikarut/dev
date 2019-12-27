@@ -1,3 +1,7 @@
+
+# export PATH="/Users/hikaru/miniconda3/bin:$PATH"  # commented out by conda initialize
+
+eval "$(starship init zsh)"
 #
 # .zshrc is sourced in interactive shells.
 # It should contain commands to set up aliases,
@@ -11,6 +15,10 @@ alias ls='ls -F'
 alias ll='ls -al'
 alias sudo='sudo -E '
 alias fix='php-cs-fixer fix --diff --level=psr2'
+
+# docker
+alias dc='docker-compose'
+alias d='docker'
 
 autoload -U compinit
 compinit -u
@@ -128,3 +136,24 @@ SAVEHIST=100
 
 export PATH=$PATH:~/composer/vendor/bin
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# Android Studio
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/hikaru/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/hikaru/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/hikaru/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/hikaru/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
